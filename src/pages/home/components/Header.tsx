@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Logo from './Logo';
+import Logo from '../../../assets/Logo';
 
 import { Button as MUIButton } from '@mui/material';
 const GetStartButton = styled(MUIButton)`
@@ -96,7 +96,7 @@ const Right = styled.div`
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
-import ArrowDown from './ArrowDown';
+import ArrowDown from '../../../assets/ArrowDown';
 const ArrowDownWrapper = styled.div`
   position: absolute;
   top: 4px;
