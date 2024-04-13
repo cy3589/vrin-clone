@@ -3,9 +3,15 @@ import { useTranslation } from 'react-i18next';
 const useSection1Texts = () => {
   const { t } = useTranslation('main');
   const title = t('section1.title');
-  const descriptionHTML = t('section1.descriptionHTML');
+  const descriptionText1 = t('section1.description.text1');
+  const descriptionText2 = t('section1.description.text2');
+  const descriptionText3 = t('section1.description.text3');
   const getStartedForFree = t('section1.getStartedForFree');
-  return { title, descriptionHTML, getStartedForFree };
+  return {
+    title,
+    getStartedForFree,
+    descriptions: [descriptionText1, descriptionText2, descriptionText3].filter(Boolean),
+  };
 };
 
 import styled from '@emotion/styled';
@@ -138,13 +144,17 @@ const Button = styled(MUIButton)`
   }
 `;
 const Section1 = () => {
-  const { getStartedForFree, descriptionHTML, title } = useSection1Texts();
+  const { descriptions, getStartedForFree, title } = useSection1Texts();
   return (
     <Container>
       <InnerContainer>
         <DescriptionBox>
           <div>{title}</div>
-          <span dangerouslySetInnerHTML={{ __html: descriptionHTML }} />
+          <span>
+            {descriptions.map((text, i) => (
+              <div key={i}>{text}</div>
+            ))}
+          </span>
           <Button>
             <span>{getStartedForFree}</span>
           </Button>

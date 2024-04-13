@@ -7,7 +7,11 @@
   },
   "section1": {
     "title": "AI로 만드는 3D 모델",
-    "descriptionHTML": "<div>인공지능으로 자동 생성되는 3D 모델과</div><div>손쉬운 편집을 경험해보세요.</div>",
+    "description": {
+      "text1": "인공지능으로 자동 생성되는 3D 모델과",
+      "text2": "손쉬운 편집을 경험해보세요.",
+      "text3": ""
+    },
     "getStartedForFree": "무료로 시작하기"
   },
   "section2": {
@@ -37,5 +41,31 @@
     "boxMidSub": "모델러 작업시간 기준",
     "boxRight": "에셋 생성비용 절감",
     "boxRightSub": "모델러 인건비 기준t"
+  },
+  "section6": {
+    "headCopy": "One-stop solution",
+    "title": "스캔부터 편집까지 VRIN 3D에서 한번에",
+    "card1": {
+      "text1": "모바일 기반의",
+      "text2": "간편한",
+      "text3": "3D 스캐닝",
+      "hover": {
+        "text1": "스튜디오와 고가의 스캐너 없이도",
+        "text2": "누구나, 언제나 가능한 3D 스캐닝",
+        "text3": "",
+        "text4": ""
+      }
+    },
+    "card2": {
+      "text1": "누구나 손쉬운 편집이",
+      "text2": "가능하도록",
+      "text3": "VRIN 3D",
+      "text4": "에디터",
+      "hover": {
+        "text1": "AI 재질 생성, 배경 편집 등",
+        "text2": "에셋을 빠르게 편집",
+        "text3": ""
+      }
+    }
   }
 }
