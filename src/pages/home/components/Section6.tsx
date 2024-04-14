@@ -22,20 +22,15 @@ const useSection6Texts = () => {
   const card2hoverText1 = t('section6.card2.hover.text1');
   const card2hoverText2 = t('section6.card2.hover.text2');
   const card2hoverText3 = t('section6.card2.hover.text3');
-  const cardText1 = {
-    text1: card1text1,
-    text2: card1text2,
-    text3: card1text3,
-    hover: { text1: card1hoverText1, text2: card1hoverText2, text3: card1hoverText3, text4: card1hoverText4 },
+  const cardTexts1 = {
+    texts: [card1text1, card1text2, card1text3].filter(Boolean),
+    hoverTexts: [card1hoverText1, card1hoverText2, card1hoverText3, card1hoverText4].filter(Boolean),
   };
-  const cardText2 = {
-    text1: card2text1,
-    text2: card2text2,
-    text3: card2text3,
-    text4: card2text4,
-    hover: { text1: card2hoverText1, text2: card2hoverText2, text3: card2hoverText3 },
+  const cardTexts2 = {
+    texts: [card2text1, card2text2, card2text3, card2text4].filter(Boolean),
+    hoverTexts: [card2hoverText1, card2hoverText2, card2hoverText3].filter(Boolean),
   };
-  return { headCopy, title, cardText1, cardText2 };
+  return { headCopy, title, cardTexts1, cardTexts2 };
 };
 
 const Wrapper = styled.div`
@@ -50,15 +45,14 @@ const InnerWrapper = styled.div`
   margin: 0 auto;
   @media only screen and (max-width: 1024px) {
     max-width: 844px;
-    padding: 100px 0px;
+    padding: 100px 0px 200px;
   }
   @media only screen and (max-width: 768px) {
-    max-width: 630px;
     width: calc(100% - 140px);
   }
   @media only screen and (max-width: 600px) {
     width: calc(100% - 40px);
-    padding: 48px 0px;
+    padding: 48px 0px 118px;
   }
 `;
 const ContentContainer = styled.div`
@@ -360,20 +354,22 @@ const ArrowSVG = () => (
     <g opacity="0.2">
       <path
         d="M18.7208 37.5996L16.8008 35.6796L33.1208 19.3596H18.2408V16.6396H37.7608V36.1596H35.0408V21.2796L18.7208 37.5996Z"
-        fill="#F3EEFF"></path>
-      <circle cx="28" cy="28" r="27.3333" stroke="#F3EEFF" strokeWidth="1.33333"></circle>
+        fill="#F3EEFF"
+      />
+      <circle cx="28" cy="28" r="27.3333" stroke="#F3EEFF" strokeWidth="1.33333" />
     </g>
   </svg>
 );
 const CloseSVG = () => (
   <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.2">
-      <path d="M25 11L11 25" stroke="#F3EEFF" stroke-width="1.3"></path>
-      <path d="M11 11L25 25" stroke="#F3EEFF" stroke-width="1.3"></path>
+      <path d="M25 11L11 25" stroke="#F3EEFF" strokeWidth="1.3" />
+      <path d="M11 11L25 25" stroke="#F3EEFF" strokeWidth="1.3" />
       <path
         d="M35.5714 17.5C35.5714 26.917 27.7159 34.5714 18 34.5714C8.28411 34.5714 0.428571 26.917 0.428571 17.5C0.428571 8.08301 8.28411 0.428571 18 0.428571C27.7159 0.428571 35.5714 8.08301 35.5714 17.5Z"
         stroke="#F3EEFF"
-        stroke-width="0.857143"></path>
+        strokeWidth="0.857143"
+      />
     </g>
   </svg>
 );
@@ -609,7 +605,7 @@ const usePrefix = (props?: { passMobile?: boolean; passTablet?: boolean; passLap
 };
 
 const Section6 = () => {
-  const { headCopy, title, cardText1, cardText2 } = useSection6Texts();
+  const { headCopy, title, cardTexts1, cardTexts2 } = useSection6Texts();
   const { i18n } = useTranslation('main');
   const { transform } = usePrefix();
   const { transformWithoutLocationPrefix: passLaptopTransformWithoutLocationPrefix } = usePrefix({ passLaptop: true });
@@ -627,23 +623,17 @@ const Section6 = () => {
           <HeadCopy>{headCopy}</HeadCopy>
           <Title>{title}</Title>
           <CardsWrapper>
-            {(() => {
-              console.log({ isMobile, card1Active, onToggleCard1 });
-              return void 0;
-            })()}
             <CardWrapper onClick={onToggleCard1} isMobile={isMobile} active={card1Active}>
               <CardContentWrapper>
                 <CardTextWrapper>
-                  {[cardText1.text1, cardText1.text2, cardText1.text3].filter(Boolean).map((text, i) => (
+                  {cardTexts1.texts.map((text, i) => (
                     <div key={i}>{text}</div>
                   ))}
                 </CardTextWrapper>
                 <CardHoverTextWrapper eng={eng}>
-                  {[cardText1.hover.text1, cardText1.hover.text2, cardText1.hover.text3, cardText1.hover.text4]
-                    .filter(Boolean)
-                    .map((text, i) => (
-                      <div key={i}>{text}</div>
-                    ))}
+                  {cardTexts1.hoverTexts.map((text, i) => (
+                    <div key={i}>{text}</div>
+                  ))}
                 </CardHoverTextWrapper>
                 {isMobile ? card1Active ? <CloseSVG /> : <ArrowSVG /> : null}
                 {!isMobile && <ArrowSVG />}
@@ -660,18 +650,14 @@ const Section6 = () => {
             <BagCardWrapper onClick={onToggleCard2} isMobile={isMobile} active={card2Active}>
               <CardContentWrapper>
                 <CardTextWrapper>
-                  {[cardText2.text1, cardText2.text2, cardText2.text3, cardText2.text4]
-                    .filter(Boolean)
-                    .map((text, i) => (
-                      <div key={i}>{text}</div>
-                    ))}
+                  {cardTexts2.texts.map((text, i) => (
+                    <div key={i}>{text}</div>
+                  ))}
                 </CardTextWrapper>
                 <CardHoverTextWrapper eng={eng}>
-                  {[cardText2.hover.text1, cardText2.hover.text2, cardText2.hover.text3]
-                    .filter(Boolean)
-                    .map((text, i) => (
-                      <div key={i}>{text}</div>
-                    ))}
+                  {cardTexts2.hoverTexts.map((text, i) => (
+                    <div key={i}>{text}</div>
+                  ))}
                 </CardHoverTextWrapper>
                 {isMobile ? card2Active ? <CloseSVG /> : <ArrowSVG /> : null}
                 {!isMobile && <ArrowSVG />}
