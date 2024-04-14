@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { useMediaQuery } from 'react-responsive';
 
@@ -78,16 +77,18 @@ const MobileHeader = () => {
                 onClick={onToggleMenu}>
                 {openMenu ? <CloseIcon /> : <HamburgerIcon />}
               </div>
-              <Link to={'https://vrin.co.kr'}>
+              <a href={'https://vrin.co.kr'}>
                 <VrinIcon />
-              </Link>
+              </a>
             </MobileLeftButtonWrapper>
           </MobileLeftWrapper>
-          <MobileLoginText>{login}</MobileLoginText>
+          <MobileLoginText>
+            <a href={'https://vrin.co.kr/login'}>{login}</a>
+          </MobileLoginText>
         </MobileInnerContainer>
         <div style={{ display: openMenu ? 'flex' : 'none', flexDirection: 'column', gap: '30px', padding: '32px 0px' }}>
           <MobileLogin style={{ opacity: +openMenu }}>
-            <Link to="https://vrin.co.kr/pricing">{pricing}</Link>
+            <a href="https://vrin.co.kr/pricing">{pricing}</a>
           </MobileLogin>
           <MobileLanguageSwitcherWrapper style={{ opacity: +openMenu }}>
             <MobileLanguageText active={i18n.language === 'KR'} onClick={() => i18n.changeLanguage('KR')}>
@@ -125,11 +126,11 @@ const PCHeader = () => {
       <Wrapper style={{ height: '70px' }}>
         <Container>
           <InnerContainer style={{ height: '100%', textAlign: 'center' }}>
-            <Link to="/">
+            <a href="/">
               <Logo />
-            </Link>
+            </a>
             <Right>
-              <Link to="https://vrin.co.kr/pricing">{pricing}</Link>
+              <a href="https://vrin.co.kr/pricing">{pricing}</a>
               <LanguageChangerButton
                 disableRipple
                 id="language-changer-button"

@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const useNavigateToRegister = () => {
-  const navigate = useNavigate();
-  const onNavigate = useCallback(() => void navigate('https://vrin.co.kr/register'), [navigate]);
+  // const onNavigate = useCallback(() => void navigate('https://vrin.co.kr/register'), [navigate]);
+  const onNavigate = useCallback(() => void (window.location.href = 'https://vrin.co.kr/register'), []);
   return { onNavigate };
 };
 

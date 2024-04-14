@@ -6,7 +6,6 @@ import { useMediaQuery } from 'react-responsive';
 import Slider, { type Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Link } from 'react-router-dom';
 
 import Modal from '@mui/material/Modal';
 
@@ -212,12 +211,12 @@ const Carousel = () => {
         {!isStretched &&
           carouselData.map(({ src, copy, link }, i) => (
             <div style={{ width: carouselWidth }} key={i}>
-              <Link style={{ position: 'relative' }} to={link}>
+              <a style={{ position: 'relative' }} href={link}>
                 <BGImage style={{ backgroundImage: `url(${src})` }} />
                 <CarouselArrow src="/assets/vrin-carousel_arrow.svg" />
                 <CarouselCopy>{copy}</CarouselCopy>
                 <Dimmed />
-              </Link>
+              </a>
             </div>
           ))}
         {isStretched &&
