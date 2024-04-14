@@ -143,7 +143,9 @@ const PCHeader = () => {
                   <ArrowDown width={24} height={24} />
                 </ArrowDownWrapper>
               </LanguageChangerButton>
-              <span style={{ color: 'rgb(110, 133, 252)' }}>{login}</span>
+              <span style={{ color: 'rgb(110, 133, 252)' }}>
+                <a href="https://vrin.co.kr/login">{login}</a>
+              </span>
               <GetStartButton onClick={onNavigate}>
                 <span>{getStartedForFree}</span>
               </GetStartButton>
