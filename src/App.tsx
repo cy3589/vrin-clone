@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home';
 import NotFound from './pages/NotFound';
 import { createTheme, ThemeProvider } from '@mui/material';
+import './App.css';
+
 const theme = createTheme({ typography: { fontFamily: 'Pretendard' } });
 
 const router = createBrowserRouter([
