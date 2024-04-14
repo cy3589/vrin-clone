@@ -67,5 +67,13 @@
         "text3": ""
       }
     }
+  },
+  "section7": {
+    "headCopy": "Various contents with VRIN 3D",
+    "title": "생성한 3D 모델로 제작하는 다양한 콘텐츠",
+    "descriptions": {
+      "text1": "VRIN 3D에서 제작한 3D 모델을 다운받아",
+      "text2": "상품 홍보, 가상쇼룸, 광고 VFX 등에 사용하세요."
+    }
   }
 }
