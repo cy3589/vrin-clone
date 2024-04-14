@@ -16,6 +16,7 @@ const useSection1Texts = () => {
 
 import styled from '@emotion/styled';
 import { Button as MUIButton } from '@mui/material';
+import { useNavigateToRegister } from '../hooks/useNavigateToRegister';
 const Container = styled.div`
   background-color: rgb(5, 7, 14);
   background-image: url(/assets/vrin-home_A-1_PC.png);
@@ -144,6 +145,7 @@ const Button = styled(MUIButton)`
   }
 `;
 const Section1 = () => {
+  const { onNavigate } = useNavigateToRegister();
   const { descriptions, getStartedForFree, title } = useSection1Texts();
   return (
     <Container>
@@ -155,7 +157,7 @@ const Section1 = () => {
               <div key={i}>{text}</div>
             ))}
           </span>
-          <Button>
+          <Button onClick={onNavigate}>
             <span>{getStartedForFree}</span>
           </Button>
         </DescriptionBox>

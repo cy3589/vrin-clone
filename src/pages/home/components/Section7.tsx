@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC, useCallback, useMemo, useRef } from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 
@@ -7,6 +7,8 @@ import Slider, { type Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
+
+import Modal from '@mui/material/Modal';
 
 const useSection7Texts = () => {
   const { t } = useTranslation('main');
@@ -111,6 +113,8 @@ const ArrowRight = () => (
   </svg>
 );
 
+import LinearProgress from '@mui/material/LinearProgress';
+
 const Carousel = () => {
   const settings: Settings = useMemo(() => ({ variableWidth: true, arrows: false }), []);
   const { transformWithoutLocationPrefix } = usePrefix();
@@ -153,6 +157,54 @@ const Carousel = () => {
   const onClickNext = useCallback(() => sliderRef.current?.slickNext(), []);
   const onClickPrev = useCallback(() => sliderRef.current?.slickPrev(), []);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [modalContent, setModalContent] = useState<{ type: 'video' | 'image'; src: string }[]>();
+  const onModalOpen = (index: number) => {
+    const targetModalContent: undefined | { type: 'video' | 'image'; src: string }[] = (() => {
+      if (index === 1) {
+        // 가상쇼룸
+        return [
+          { type: 'video', src: '/assets/vrin-showroom_1.mp4' },
+          { type: 'video', src: '/assets/vrin-showroom_2.mp4' },
+          { type: 'video', src: '/assets/vrin-showroom_3.mp4' },
+        ];
+      }
+      if (index === 2) {
+        // 전시
+        return [
+          { type: 'video', src: '/assets/vrin-exhibition_1.mp4' },
+          { type: 'video', src: '/assets/vrin-exhibition_2.mp4' },
+        ];
+      }
+      if (index === 3) {
+        // 상품홍보
+        return [
+          { type: 'video', src: '/assets/vrin-product_1.mp4' },
+          { type: 'video', src: '/assets/vrin-product_2.mp4' },
+          { type: 'video', src: '/assets/vrin-product_3.mp4' },
+          { type: 'image', src: '/assets/vrin-modal_advertise_1.png' },
+          { type: 'image', src: '/assets/vrin-modal_advertise_2.png' },
+          { type: 'image', src: '/assets/vrin-modal_advertise_3.png' },
+          { type: 'image', src: '/assets/vrin-modal_advertise_4.png' },
+        ];
+      }
+    })();
+
+    if (!targetModalContent) return;
+    setModalContent(targetModalContent);
+
+    const slidePages = (targetModalContent.length ?? 2) - 1;
+    const slidePercent = 100 * (1 / slidePages);
+    setModalSlidePercent(slidePercent);
+    setTimeout(() => setModalOpen(true), 0);
+
+    // setModalSlidePercent(Math.floor((100 * ( 2)) / ((modalContent?.length ?? 1)*2)));
+  };
+
+  const modalSliderRef = useRef<Slider | null>(null);
+  const [modalSlidePercent, setModalSlidePercent] = useState(0);
+
   return (
     <CarouselWrapper>
       {isStretched && <CarouselHandler onClickNext={onClickNext} onClickPrev={onClickPrev} />}
@@ -169,19 +221,49 @@ const Carousel = () => {
             </div>
           ))}
         {isStretched &&
-          carouselData.map(({ src, copy, link }, i) => (
-            <div style={{ width: carouselWidth }} key={i}>
-              <Link style={{ position: 'relative' }} to={link}>
+          carouselData.map(({ src, copy }, i) => (
+            <div onClick={() => onModalOpen(i + 1)} style={{ width: carouselWidth }} key={i}>
+              <div style={{ position: 'relative' }}>
                 <BGImage style={{ backgroundImage: `url(${src})` }} />
                 <StretchedContentWrapper>
                   <span>{copy}</span>
                   <img src="/assets/vrin-arrow_outward.svg" />
                 </StretchedContentWrapper>
                 <Dimmed />
-              </Link>
+              </div>
             </div>
           ))}
       </Slider>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <ModalWrapper>
+          <Slider
+            autoplay
+            afterChange={(slideNumber) => {
+              const slidePages = (modalContent?.length ?? 2) - 1;
+              const slidePercent = 100 * ((slideNumber + 1) / slidePages);
+              setModalSlidePercent(slidePercent);
+            }}
+            ref={modalSliderRef}
+            slidesToShow={2}
+            arrows={false}
+            infinite={false}>
+            {modalContent?.map(({ src, type }, i) => (
+              <div key={i} style={{ height: '29vw', margin: '0 20px' }}>
+                {type === 'image' && <img style={{ width: '100%', height: '29vw', objectFit: 'cover' }} src={src} />}
+                {type === 'video' && (
+                  <video style={{ width: '100%', height: '29vw', objectFit: 'cover' }} muted autoPlay src={src} />
+                )}
+              </div>
+            ))}
+          </Slider>
+          <ProgressWrapper>
+            <button onClick={() => setModalOpen(false)}>
+              <img src="/assets/vrin-modal_close.svg" />
+            </button>
+            <CustomProgress variant="determinate" style={{ width: '345px' }} value={modalSlidePercent} />
+          </ProgressWrapper>
+        </ModalWrapper>
+      </Modal>
     </CarouselWrapper>
   );
 };
@@ -445,5 +527,35 @@ const CarouselButtonWrapper = styled.div`
   width: auto;
   @media only screen and (max-width: 1024px) {
     left: 48px;
+  }
+`;
+const ProgressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 60px;
+  bottom: -70px;
+  width: 300px;
+  height: 40px;
+`;
+const CustomProgress = styled(LinearProgress)`
+  margin-left: 16px;
+  .MuiLinearProgress-bar {
+    background: -webkit-linear-gradient(268.82deg, rgb(115, 55, 255) 12.24%, rgb(49, 69, 255) 98.89%);
+  }
+  background-color: rgb(255, 255, 255);
+`;
+
+const ModalWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px 40px;
+  div.slick-slide {
+    position: relative;
+    padding: 0px 20px;
   }
 `;

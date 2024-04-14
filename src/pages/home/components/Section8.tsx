@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigateToRegister } from '../hooks/useNavigateToRegister';
 
 const GetStartButton = styled.button`
   width: fit-content;
@@ -63,6 +64,7 @@ const BottomFixedButton = styled.button`
   color: rgb(255, 255, 255);
 `;
 const Section8 = () => {
+  const { onNavigate } = useNavigateToRegister();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const { inView, ref } = useInView();
   const { t } = useTranslation('main');
@@ -73,14 +75,14 @@ const Section8 = () => {
       <Wrapper ref={ref}>
         <InnerWrapper>
           <Copy>{copy}</Copy>
-          <GetStartButton>
+          <GetStartButton onClick={onNavigate}>
             <span>{getStartedForFree}</span>
           </GetStartButton>
         </InnerWrapper>
       </Wrapper>
       {isMobile && !inView && (
         <BottomFixed>
-          <BottomFixedButton>{getStartedForFree}</BottomFixedButton>
+          <BottomFixedButton onClick={onNavigate}>{getStartedForFree}</BottomFixedButton>
         </BottomFixed>
       )}
     </>

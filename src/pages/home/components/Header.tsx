@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import Logo from '../../../assets/Logo';
 import ArrowDown from '../../../assets/ArrowDown';
+import { useNavigateToRegister } from '../hooks/useNavigateToRegister';
 
 const useHeaderTexts = () => {
   const { t } = useTranslation('main');
@@ -85,7 +86,9 @@ const MobileHeader = () => {
           <MobileLoginText>{login}</MobileLoginText>
         </MobileInnerContainer>
         <div style={{ display: openMenu ? 'flex' : 'none', flexDirection: 'column', gap: '30px', padding: '32px 0px' }}>
-          <MobileLogin style={{ opacity: +openMenu }}>{pricing}</MobileLogin>
+          <MobileLogin style={{ opacity: +openMenu }}>
+            <Link to="https://vrin.co.kr/pricing">{pricing}</Link>
+          </MobileLogin>
           <MobileLanguageSwitcherWrapper style={{ opacity: +openMenu }}>
             <MobileLanguageText active={i18n.language === 'KR'} onClick={() => i18n.changeLanguage('KR')}>
               KOR
@@ -108,6 +111,7 @@ const HeaderSwitcher = () => {
 };
 
 const PCHeader = () => {
+  const { onNavigate } = useNavigateToRegister();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
@@ -125,7 +129,7 @@ const PCHeader = () => {
               <Logo />
             </Link>
             <Right>
-              <div>{pricing}</div>
+              <Link to="https://vrin.co.kr/pricing">{pricing}</Link>
               <LanguageChangerButton
                 disableRipple
                 id="language-changer-button"
@@ -139,7 +143,7 @@ const PCHeader = () => {
                 </ArrowDownWrapper>
               </LanguageChangerButton>
               <span style={{ color: 'rgb(110, 133, 252)' }}>{login}</span>
-              <GetStartButton>
+              <GetStartButton onClick={onNavigate}>
                 <span>{getStartedForFree}</span>
               </GetStartButton>
             </Right>
